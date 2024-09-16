@@ -1,0 +1,14 @@
+/vendor
+/uploads/product-imgs/*
+/uploads/tmp/*
+/tests/Unit/DataProviders
+/.phpunit.result.cache
+/config/config.php
+/tests/Unit/Plugins
+/app/Cron
+/app/Validator.php
+/install/index.php
+/plugins/WoocommercePlugin
+/plugins/FacebookPlugin
+test.php
+.$prodmanager.drawio.bkp
