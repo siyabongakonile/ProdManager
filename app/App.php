@@ -31,7 +31,7 @@ class App{
         try{
             return $this->router->resolve();
         } catch(ViewNotFoundException|RouteNotFoundException){
-            return $this->router->get404Route();
+            return $this->router->get404Route($this->request, $this->response);
         }
     }
 }

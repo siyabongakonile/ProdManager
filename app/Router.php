@@ -7,12 +7,18 @@ use App\Route;
 
 use App\Controllers\ErrorController;
 use App\Exceptions\RouteNotFoundException;
+use App\Middleware\MiddlewareInterface;
+use App\MiddlewareTrait;
 
 class Router{
     /** @var Route $route */
     private array $routes = [];
     private Request $request;
     private Response $response;
+    /** @var array<MiddlewareInterface> $middleware */
+    private array $middleware = [];
+
+    use MiddlewareTrait;
 
 
     public function __construct(Request $request, Response $response){
@@ -126,12 +132,12 @@ class Router{
      */
     private function resolveNonvariableUri(string $uri, string $method){
         $route = $this->getRoute($method, $uri);
-        Route::execMiddleware($route);
         [$class, $action] = $this->getClassAndActionOfRoute($route);
 
         if(!$this->actionExists($class, $action))
             throw new RouteNotFoundException();
 
+        $this->runMiddleware($route);
         $this->callControllerAction($class, $action);
     }
 
@@ -164,6 +170,7 @@ class Router{
         if(!$this->actionExists($class, $action))
             throw new RouteNotFoundException();
 
+        $this->runMiddleware($route);
         $this->callControllerAction($class, $action);
     }
 
@@ -203,7 +210,21 @@ class Router{
         return $uri;
     }
 
-    public function get404Route(){
-        return (new ErrorController())->getError404();
+    public function get404Route($request, $response){
+        return (new ErrorController())->getError404($request, $response);
+    }
+
+    private function runMiddleware(Route $route){
+        $next = function(){};
+
+        $allMiddleware = array_merge($this->middleware, $route->getMiddleware());
+        $revAllMiddleware = array_reverse($allMiddleware);
+        foreach($revAllMiddleware as $middleware){
+            $next = function() use ($middleware, $next){
+                return $middleware->handle($this->request, $this->response, $next);
+            };
+        }
+
+        return $next();
     }
 }

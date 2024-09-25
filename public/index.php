@@ -30,6 +30,9 @@ $router = new Router($request, $response);
 
 $app = new App($router, $request, $response);
 
+// Add global middleware
+$router->middleware('Auth');
+
 // Auth Pages
 $router->get('/login', AuthController::class, 'getLogin');
 $router->post('/login', AuthController::class, 'login');
@@ -52,7 +55,7 @@ $router->post('/media/image/upload', MediaController::class, 'uploadImage');
 $router->post('/media/image/delete', MediaController::class, 'deleteImage');
 
 // Categories Routes
-$router->get('/categories', CategoriesController::class, 'getCategories')->middleware(new \App\Middleware\AuthMiddleware());
+$router->get('/categories', CategoriesController::class, 'getCategories');
 $router->get('/categories/{page}', CategoriesController::class, 'getCategories');
 $router->get('/categories/{page}/{limit}', CategoriesController::class, 'getCategories');
 $router->get('/category/{id}', CategoriesController::class, 'getCategory');

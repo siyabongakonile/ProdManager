@@ -39,4 +39,24 @@ class Utils{
         
         return true;
     }
+
+    /**
+     * Get all filenames of the files in directory.
+     * 
+     * @param string $dir Directory to search for files in.
+     * @return array<string> Files in the directory.
+     */
+    static public function getFilesFromDir(string $dir): array{
+        if(!is_dir($dir))
+            return [];
+
+        $files = [];
+        $dirsFiles = scandir($dir);
+        foreach($dirsFiles as $dirFile){
+            if(is_file($dir . DIR_SEP . $dirFile))
+                $files[] = $dirFile;
+        }
+
+        return $files;
+    }
 }

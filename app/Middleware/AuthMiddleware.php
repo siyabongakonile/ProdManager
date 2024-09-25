@@ -7,7 +7,7 @@ use App\Request;
 use App\Response;
 
 class AuthMiddleware implements MiddlewareInterface{
-    public function __invoke(Request $request, Response $response, $next){
+    public function handle(Request $request, Response $response, $next){
         if($request->getCookie('session')['auth']){
             return $next($request, $response);
         } else {
