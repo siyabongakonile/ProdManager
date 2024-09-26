@@ -8,6 +8,9 @@ use App\Middleware\MiddlewareInterface;
 use App\Utils;
 
 trait MiddlewareTrait{
+    /** @var array<string> $cachedMiddlewareFiles */
+    protected static array $cachedMiddlewareFiles = [];
+
     public function middleware(MiddlewareInterface|string $middleware){
         if($middleware instanceof MiddlewareInterface)
             $this->middleware[] = $middleware;
@@ -20,11 +23,14 @@ trait MiddlewareTrait{
     }
 
     public function getMiddlewareUsingName(string $middlewareName): MiddlewareInterface|false{
-        $middlewareDir = __DIR__ . DIR_SEP . "Middleware";
-        $files = Utils::getFilesFromDir($middlewareDir);
+        if(empty(self::$cachedMiddlewareFiles)){
+            $middlewareDir = __DIR__ . DIR_SEP . "Middleware";
+            self::$cachedMiddlewareFiles = Utils::getFilesFromDir($middlewareDir);
+        }
+
         $middlewareFilename = $middlewareName . "Middleware.php";
         $middlewareObj = false;
-        foreach($files as $file){
+        foreach(self::$cachedMiddlewareFiles as $file){
             if($file == $middlewareFilename){
                 $class = "\\App\\Middleware\\" . $middlewareName . "Middleware";
                 if(!\class_exists($class))
