@@ -26,7 +26,7 @@ abstract class BaseController{
      */
     protected function render(string $view, array $args = []){
         $session = Session::getInstance();
-        $args['user_level'] = @$session->get('userlevel'); 
+        $args['userlevel'] = @$session->get('userlevel');
         $args['isLoggedIn'] = @$session->isLoggedIn();
         $template = $this->twig->load($view . '.html.twig');
         echo $template->render($args);
