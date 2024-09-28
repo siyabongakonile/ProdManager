@@ -17,26 +17,7 @@ class Database{
      */
     static private ?Database $db = null;
 
-    /**
-     * The database username.
-     */
-    private string $username;
-
-    /**
-     * The database password.
-     */
-    private string $password;
-
-    /**
-     * The database name.
-     */
-    private string $dbName;
-
     private function __construct(){
-        $this->username = DB_USERNAME;
-        $this->password = DB_PASSWORD;
-        $this->dbName   = DB_NAME;
-
         Database::$database = new \mysqli(
             DB_HOSTNAME,
             DB_USERNAME,
@@ -96,6 +77,9 @@ class Database{
         return ($value)? 'true': 'false';
     }
 
+    /**
+     * Pass any method calls that the current obj did not define to mysqli instance.
+     */
     public function __call(string $name, array $args){
         return Database::$database->{$name}(...$args);
     }
