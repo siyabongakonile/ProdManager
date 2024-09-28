@@ -34,4 +34,41 @@ class BrandTest extends TestCase{
         $this->expectException(EmptyBrandNameException::class);
         $this->brand->setName('');
     }
+
+    /** @test */
+    public function itGetsId() {
+        $brand = new Brand(34, "test");
+        $this->assertEquals(34, $brand->getId());
+    }
+
+    /** @test */
+    public function itGetsNullId(){
+        $this->assertNull($this->brand->getId());
+    }
+
+    /** @test */
+    public function itSetsId(){
+        $id = 5;
+        $this->brand->setId($id);
+        $this->assertEquals($id, $this->brand->getId());
+    }
+
+    /** @test */
+    public function itSetsNullId(){
+        $id = null;
+        $this->brand->setId($id);
+        $this->assertNull($id);
+    }
+
+    /** @test */
+    public function itGetsName(){
+        $this->assertEquals("brand name", $this->brand->getName());
+    }
+
+    /** @test */
+    public function itSetsName(){
+        $name = 'new name';
+        $this->brand->setName($name);
+        $this->assertEquals($name, $this->brand->getName());
+    }
 }
