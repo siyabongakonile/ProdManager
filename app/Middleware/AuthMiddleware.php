@@ -8,9 +8,12 @@ use App\Response;
 
 class AuthMiddleware implements MiddlewareInterface{
     public function handle(Request $request, Response $response, $next){
-        if($request->getCookie('session')['auth']){
+        if($request->getSession()->isLoggedIn()){
             return $next($request, $response);
         } else {
+            $uri = $request->getUri();
+            if($uri == '/login' || $uri == '/register')
+                return $next();
             return $response->sendToPage('/login');
         }
     }

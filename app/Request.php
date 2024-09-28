@@ -66,12 +66,12 @@ class Request{
     }
 
     /**
-     * Get the value of the $_SESSION constant.
+     * Get a session object.
      * 
-     * @return array The value of $_SESSION
+     * @return Session The session object
      */
-    public function getSession(): ?array{
-        return $_SESSION ?? null;
+    public function getSession(): Session{
+        return Session::getInstance();
     }
 
     /**
