@@ -4,14 +4,21 @@ declare(strict_types = 1);
 namespace Tests\Unit;
 
 use App\Exceptions\RouteNotFoundException;
+use App\Request;
+use App\Response;
 use App\Router;
+use App\Route;
 use PHPUnit\Framework\TestCase;
 
 class RouterTest extends TestCase{
     private Router $router;
+    private Request $request;
+    private Response $response;
 
     protected function setUp(): void{
-        $this->router = new Router();
+        $this->request = new Request('get', '/');
+        $this->response = new Response();
+        $this->router = new Router($this->request, $this->response);
     }
 
     /** @test */
@@ -19,9 +26,7 @@ class RouterTest extends TestCase{
         $this->router->register('/user', 'get', 'TestUser', 'index');
 
         $expected = [
-            'get' => [
-                '/user' => ['TestUser', 'index']
-            ]
+            new Route('get', '/user', 'TestUser', 'index')
         ];
 
         $this->assertEquals($expected, $this->router->getRoutes());
@@ -32,11 +37,7 @@ class RouterTest extends TestCase{
         $this->router->post('/user', 'TestUser', 'newUser');
 
         $expected = [
-            'post' => [
-                '/user' => [
-                    'TestUser', 'newUser'
-                ]
-            ]
+            new Route('post', '/user', 'TestUser', 'newUser')
         ];
 
         $this->assertEquals($expected, $this->router->getRoutes());
@@ -47,11 +48,7 @@ class RouterTest extends TestCase{
         $this->router->get('/user', 'TestUser', 'newUser');
 
         $expected = [
-            'get' => [
-                '/user' => [
-                    'TestUser', 'newUser'
-                ]
-            ]
+            new Route('get', '/user', 'TestUser', 'newUser')
         ];
 
         $this->assertEquals($expected, $this->router->getRoutes());
@@ -59,7 +56,7 @@ class RouterTest extends TestCase{
 
     /** @test */
     public function emptyRouterWhenCreated(){
-        $router = new Router();
+        $router = new Router($this->request, $this->response);
 
         $this->assertEmpty($router->getRoutes());
     }
@@ -123,11 +120,7 @@ class RouterTest extends TestCase{
     public function getValidAddedRoutes(){
         $this->router->post('/test', 'test', 'test');
 
-        $expected = [
-            'post' => [
-                '/test' => ['test', 'test']
-            ]
-        ];
+        $expected = [new Route('post', '/test', 'test', 'test')];
         $this->assertEquals($expected, $this->router->getRoutes());
     }
 }
