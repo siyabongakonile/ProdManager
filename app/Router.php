@@ -210,10 +210,6 @@ class Router{
         return $uri;
     }
 
-    public function get404Route($request, $response){
-        return (new ErrorController())->getError404($request, $response);
-    }
-
     private function runMiddleware(Route $route){
         $next = function(){};
 

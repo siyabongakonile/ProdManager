@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App;
 
+use App\Controllers\ErrorController;
 use \App\Plugins\PluginManager;
 use \App\Exceptions\ViewExceptions\ViewNotFoundException;
 use \App\Exceptions\RouteNotFoundException;
@@ -31,7 +32,8 @@ class App{
         try{
             return $this->router->resolve();
         } catch(ViewNotFoundException|RouteNotFoundException){
-            return $this->router->get404Route($this->request, $this->response);
+            $errorController = new ErrorController();
+            return $errorController->getError404($this->request, $this->response);
         }
     }
 }
