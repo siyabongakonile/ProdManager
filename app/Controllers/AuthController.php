@@ -8,6 +8,7 @@ use App\Database;
 use App\Models\UserModel;
 use App\Request;
 use App\Response;
+use App\Session;
 
 class AuthController extends BaseController{
     protected UserModel $model;
@@ -41,9 +42,9 @@ class AuthController extends BaseController{
             return;
         }
 
-        $_SESSION['auth'] = true;
-        $_SESSION['user_id'] = $user->getId();
-        $_SESSION['user_level'] = $user->getLevel()->value;
+        $session = Session::getInstance();
+        $session->setIsLoggedIn($user->getId());
+        $session->set('userlevel', $user->getLevel()->value);
 
         $response->sendToHomePage();
     }

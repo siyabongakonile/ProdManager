@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Controllers;
 
+use App\Session;
 use Twig\TwigFilter;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -24,8 +25,9 @@ abstract class BaseController{
      * @return void
      */
     protected function render(string $view, array $args = []){
-        $args['user_level'] = @$_SESSION['user_level']; 
-        $args['isLoggedIn'] = @$_SESSION['auth'] ?? false;
+        $session = Session::getInstance();
+        $args['user_level'] = @$session->get('userlevel'); 
+        $args['isLoggedIn'] = @$session->isLoggedIn();
         $template = $this->twig->load($view . '.html.twig');
         echo $template->render($args);
     }
