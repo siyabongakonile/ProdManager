@@ -33,7 +33,7 @@ class RouterTest extends TestCase{
     }
 
     /** @test */
-    public function itRegistersPostToute(){
+    public function itRegistersPostRoute(){
         $this->router->post('/user', 'TestUser', 'newUser');
 
         $expected = [
@@ -44,7 +44,7 @@ class RouterTest extends TestCase{
     }
 
     /** @test */
-    public function itRegistersGetToute(){
+    public function itRegistersGetRoute(){
         $this->router->get('/user', 'TestUser', 'newUser');
 
         $expected = [
