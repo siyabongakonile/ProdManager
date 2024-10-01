@@ -5,7 +5,7 @@
 /.phpunit.result.cache
 /config/config.php
 /tests/Unit/Plugins
-/app/Cron
+/cron.log
 /app/Validator.php
 /install/index.php
 /plugins/WoocommercePlugin
