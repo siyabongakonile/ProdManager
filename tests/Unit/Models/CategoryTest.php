@@ -6,7 +6,7 @@ namespace Tests\Unit\Models;
 use App\Models\Category;
 use App\Models\CategoryModel;
 use PHPUnit\Framework\TestCase;
-use Exceptions\ModelExceptions\EmptyCategorySlugExcption;
+use App\Exceptions\ModelExceptions\EmptyCategorySlugExcption;
 use App\Exceptions\ModelExceptions\EmptyCategoryNameException;
 
 class CategoryTest extends TestCase{
