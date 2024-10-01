@@ -88,7 +88,13 @@ class FormBuilderTest extends TestCase{
      * @todo Implement method
      */
     public function itAddsFormRadioButtons(){
+        $name = "test-radio-btns";
+        $options = ['test' => 'test'];
+        $selectedValue = 'test';
+        $this->formBuilder->addRadioButtons($name, $options, $selectedValue);
 
+        $expected = "<label><input type='radio' name='{$name}' value='{$selectedValue}' checked> test</label>";
+        $this->assertEquals($expected, $this->formBuilder->getFormFields());
     }
 
     /** @test */
