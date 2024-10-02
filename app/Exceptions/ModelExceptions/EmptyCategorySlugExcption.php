@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Exceptions\ModelExceptions;
+namespace App\Exceptions\ModelExceptions;
 
 use App\Exceptions\AppException;
 
