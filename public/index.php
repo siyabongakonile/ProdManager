@@ -36,8 +36,8 @@ $router->middleware('Auth');
 // Auth Pages
 $router->get('/login', AuthController::class, 'getLogin');
 $router->post('/login', AuthController::class, 'login');
-$router->get('/signup', AuthController::class, 'getSignUp');
-$router->post('/signup', AuthController::class, 'signUp');
+$router->get('/register', AuthController::class, 'getRegister');
+$router->post('/register', AuthController::class, 'register');
 $router->get('/logout', AuthController::class, 'logout');
 
 // Products Routes
