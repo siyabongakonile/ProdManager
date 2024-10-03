@@ -4,7 +4,8 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Database;
-use Exceptions\ModelExceptions\EmptyCategorySlugExcption;
+use App\Exceptions\AppException;
+use App\Exceptions\ModelExceptions\EmptyCategorySlugExcption;
 use App\Exceptions\ModelExceptions\EmptyCategoryNameException;
 
 class Category implements IPrototype{
