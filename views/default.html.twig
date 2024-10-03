@@ -32,7 +32,7 @@
                     <li class="side-nav-link">
                         <a href="/tags" class="side-nav-link-item btn btn-full-width {% if route == '/tags' or route == '/tag' or route == '/tag/create' %}btn-primary{% endif %}">Tags</a>
                     </li>
-                    {% if user_level == 'admin' %}
+                    {% if userlevel == 'admin' %}
                     <li class="side-nav-link">
                         <a href="/users" class="side-nav-link-item btn btn-full-width {% if route == '/users' or route starts with '/user' %}btn-primary{% endif %}">Users</a>
                     </li>
