@@ -7,7 +7,6 @@
 /tests/Unit/Plugins
 /cron.log
 /app/Validator.php
-/install/index.php
 /plugins/WoocommercePlugin
 /plugins/FacebookPlugin
 test.php
